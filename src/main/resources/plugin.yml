@@ -1,0 +1,14 @@
+name: PaperJetty
+version: '${project.version}'
+main: cn.paper_card.jetty.PaperJetty
+api-version: '1.20'
+folia-supported: true
+author: Paper99
+
+commands:
+  jetty:
+    permission: paper-jetty.command
+
+permissions:
+  paper-jetty.command:
+    default: op
