@@ -104,6 +104,8 @@ public final class PaperJetty extends JavaPlugin {
     @Override
     public void onDisable() {
         this.stopJetty(this.getServer().getConsoleSender());
+
+        this.taskScheduler.cancelTasks(this);
     }
 
     @NotNull ConfigManager getConfigManager() {
