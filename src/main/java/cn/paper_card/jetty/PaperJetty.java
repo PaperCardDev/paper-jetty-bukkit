@@ -1,7 +1,5 @@
 package cn.paper_card.jetty;
 
-import cn.paper_card.bilibili_bind.api.BilibiliBindApi;
-import cn.paper_card.paper_token.api.PaperTokenApi;
 import com.github.Anon8281.universalScheduler.UniversalScheduler;
 import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler;
 import org.bukkit.command.CommandSender;
@@ -9,11 +7,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.jetbrains.annotations.NotNull;
 
 public final class PaperJetty extends JavaPlugin {
-
 
     private Server server = null;
 
@@ -29,21 +25,6 @@ public final class PaperJetty extends JavaPlugin {
         c.addHandler(new Authenticator(this));
     }
 
-    void addTokenApi(@NotNull HandlerCollection c) {
-        final PaperTokenApi api = this.getServer().getServicesManager().load(PaperTokenApi.class);
-        if (api == null) return;
-
-        final Object o = api.getServletContextHandler();
-        c.addHandler((ServletContextHandler) o);
-    }
-
-    void addBiliApi(@NotNull HandlerCollection c) {
-        final BilibiliBindApi api = this.getServer().getServicesManager().load(BilibiliBindApi.class);
-        if (api == null) return;
-
-        final Object o = api.getServletContextHandler();
-        c.addHandler((ServletContextHandler) o);
-    }
 
     void startJetty(@NotNull CommandSender sender) {
         if (this.server != null) return;
@@ -58,9 +39,6 @@ public final class PaperJetty extends JavaPlugin {
 
             final HandlerList list = new HandlerList();
             this.addAuthenticator(list);
-            this.addBiliApi(list);
-            this.addTokenApi(list);
-
             ser.setHandler(list);
 
             ser.start();
